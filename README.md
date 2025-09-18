@@ -14,3 +14,8 @@ Suivre les instructions sur ENA pour la mise en place de l'environment de travai
 - `01_imGUIExample`: Demo simple de comment utiliser imGUI pour les laboratoires.
 - `01_Triangles` : Application **OpenGL (4.6)** en utilisant DSA. Cet exemple est à privilégier. 
 - `01_Triangles_OGL43` : Application **OpenGL (4.3)** qui n'utilise pas le DSA. Cet exemple est vous ai fourni pour référence. 
+
+## Cours 02 (Couleur)
+
+- `02_PositionAndColor`: Démo montrant comment utiliser un VBO et un VAO pour afficher des données par sommet coloré. Elle montre également comment utiliser des uniformes pour contrôler le comportement d’un nuanceur. 
+- `02_PositionAndColor_ssbo`: Démo montrant l'utilisation de SSBO (Shader Storage Buffer Object) comme alternative au VBO/VAO. Cette fonctionalité est montrer dans un cas simple.
