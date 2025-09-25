@@ -19,3 +19,7 @@ Suivre les instructions sur ENA pour la mise en place de l'environment de travai
 
 - `02_PositionAndColor`: Démo montrant comment utiliser un VBO et un VAO pour afficher des données par sommet coloré. Elle montre également comment utiliser des uniformes pour contrôler le comportement d’un nuanceur. 
 - `02_PositionAndColor_ssbo`: Démo montrant l'utilisation de SSBO (Shader Storage Buffer Object) comme alternative au VBO/VAO. Cette fonctionalité est montrer dans un cas simple.
+
+## Cours 03 (Éclairage)
+
+- `03_LightingNoCamera` : Démo montrant comment le calcul d'éclairage peut être mener sur deux formes (cylindre ou patches de Bézier) avec différentes techniques.  
