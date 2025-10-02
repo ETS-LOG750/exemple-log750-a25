@@ -1,1 +1,1 @@
-# Nothing, only for course 04
+add_subdirectory(ex_04_hierachy)

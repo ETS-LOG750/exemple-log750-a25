@@ -23,3 +23,8 @@ Suivre les instructions sur ENA pour la mise en place de l'environment de travai
 ## Cours 03 (Éclairage)
 
 - `03_LightingNoCamera` : Démo montrant comment le calcul d'éclairage peut être mener sur deux formes (cylindre ou patches de Bézier) avec différentes techniques.  
+
+## Cours 04 (Transformation)
+
+- `04_Transformation` : Démonstration de plusieurs combinaison de transformation (et application de celle-ci dans le nuanceur de sommet)
+- `04_Animation` : Démonstration de la différence entre interpolation d'euler et quaternions (exemple avancé)

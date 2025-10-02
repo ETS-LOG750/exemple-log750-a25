@@ -12,3 +12,9 @@ add_subdirectory(02_PositionAndColor_ssbo)
 
 # Seance 03: Lighting No camera
 add_subdirectory(03_LightingNoCamera)
+
+# Seance 04: Transformations
+# - simple transformation
+add_subdirectory(04_Transformation)
+# - comparaison with different animations
+add_subdirectory(04_Animation)
