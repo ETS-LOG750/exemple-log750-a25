@@ -18,3 +18,11 @@ add_subdirectory(03_LightingNoCamera)
 add_subdirectory(04_Transformation)
 # - comparaison with different animations
 add_subdirectory(04_Animation)
+
+# Seance 05: Geometrie
+# - draw squares
+add_subdirectory(05_DrawSquares)
+# - geometry shader
+add_subdirectory(05_GeometryShader)
+# - tesselation teapot
+add_subdirectory(05_TesselationTeapot)

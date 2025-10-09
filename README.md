@@ -28,3 +28,9 @@ Suivre les instructions sur ENA pour la mise en place de l'environment de travai
 
 - `04_Transformation` : Démonstration de plusieurs combinaison de transformation (et application de celle-ci dans le nuanceur de sommet)
 - `04_Animation` : Démonstration de la différence entre interpolation d'euler et quaternions (exemple avancé)
+
+## Cours 05 (Modélisation)
+
+- `05_DrawSquares` : Démonstration utiliser les différents mode de dessin en OpenGL (indexé, fan, ...)
+- `05_GeometryShader` : Démonstration de l'utilisation d'un géometry shader pour calculer des information sur un maillage quelquonque.
+- `05_TesselationTeaport` : Utilisation des surface de Bézier et d'un shader de tesselation. 
