@@ -46,6 +46,7 @@ private:
 
 	// Show normal (geometry shader)
 	bool m_showNormal = false;
+	bool m_showCenter = false;
 	float m_scale = 0.3f;
 
 	enum VAO_IDs { Triangles, NumVAOs };
@@ -67,4 +68,5 @@ private:
 	const GLint SHADER_MATRIX = 0;
 	const GLint SHADER_MATRIX_NORMAL = 1;
 	const GLint SHADER_SCALE = 2;
+	const GLint SHADER_SHOWCENTER = 3;
 };

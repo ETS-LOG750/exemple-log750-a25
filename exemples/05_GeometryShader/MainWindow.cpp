@@ -222,6 +222,7 @@ void MainWindow::RenderImgui()
 		}
 
 		ImGui::Checkbox("Show normal", &m_showNormal);
+		ImGui::Checkbox("Show center", &m_showCenter);
 		ImGui::SliderFloat("Scale", &m_scale, 0.01f, 2.0f);
 
 		
@@ -251,6 +252,7 @@ void MainWindow::RenderScene()
 		m_normalShader->setMat4(SHADER_MATRIX, m);
 		m_normalShader->setMat3(SHADER_MATRIX_NORMAL, glm::inverseTranspose(glm::mat3(m)));
 		m_normalShader->setFloat(SHADER_SCALE, m_scale);
+		m_normalShader->setBool(SHADER_SHOWCENTER, m_showCenter);
 		glDrawArrays(GL_TRIANGLES, 0, (GLsizei)m_nbVertices);
 	}
 }
