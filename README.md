@@ -34,3 +34,8 @@ Suivre les instructions sur ENA pour la mise en place de l'environment de travai
 - `05_DrawSquares` : Démonstration utiliser les différents mode de dessin en OpenGL (indexé, fan, ...)
 - `05_GeometryShader` : Démonstration de l'utilisation d'un géometry shader pour calculer des information sur un maillage quelquonque.
 - `05_TesselationTeaport` : Utilisation des surface de Bézier et d'un shader de tesselation. 
+
+## Cours 06 (Caméra)
+
+- `06_LightingCamera` : Démonstration de comment calculer l'éclairage dans l'espace caméra.
+- `06_Unproject` : Code alternatif pour effectuer une opération de picking.
