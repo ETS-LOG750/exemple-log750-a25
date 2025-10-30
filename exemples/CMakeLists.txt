@@ -35,3 +35,10 @@ add_subdirectory(lab_02_Picking)
 add_subdirectory(06_LightingCamera)
 # - Unproject 
 add_subdirectory(06_Unproject)
+
+
+# Seance 07: Intra
+
+# Seance 08: Animation
+# - Particule animation
+add_subdirectory(08_Particules)
