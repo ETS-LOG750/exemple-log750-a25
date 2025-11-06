@@ -42,3 +42,9 @@ add_subdirectory(06_Unproject)
 # Seance 08: Animation
 # - Particule animation
 add_subdirectory(08_Particules)
+
+# Seance 09: Texture
+# - Texture
+add_subdirectory(09_Texture)
+# - Texture bindless
+add_subdirectory(09_Texture_bindless)

@@ -42,3 +42,7 @@ Suivre les instructions sur ENA pour la mise en place de l'environment de travai
 
 ## Cours 08 (Animation)
 - `08_Particules` : Démonstration de la simulation de particule avec compute shaders.
+
+## Cours 09 (Textures)
+- `09_Texture`: Démonstration de comment utiliser les textures en OpenGL.
+- `09_Texture_bindless`: Méthode alternative pour la gestion des textures en OpenGL. 
