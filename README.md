@@ -46,3 +46,8 @@ Suivre les instructions sur ENA pour la mise en place de l'environment de travai
 ## Cours 09 (Textures)
 - `09_Texture`: Démonstration de comment utiliser les textures en OpenGL.
 - `09_Texture_bindless`: Méthode alternative pour la gestion des textures en OpenGL. 
+
+## Cours 10 (Textures avancées)
+- `10_NormalMap`: Démontration de l'utilisation du normal mapping en OpenGL.
+- `10_Sky`: Démonstration de l'ajout d'une carte d'environnement (latitude-longitude) en OpenGL. 
+- `10_SimpleFBO`: Démontration de l'utilisation du Framebuffer Object pour effectuer un rendu multipasse.
