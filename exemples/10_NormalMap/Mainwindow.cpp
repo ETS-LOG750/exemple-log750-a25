@@ -19,6 +19,10 @@ MainWindow::MainWindow() :
     m_at(glm::vec3(0, 0, -1)),
     m_up(glm::vec3(0, 1, 0))
 {
+    m_light_theta = -126.0f;
+    m_light_phi = 45.0f;
+    m_activateARM = false;
+    m_distance = 1.0f;
 }
 
 void MainWindow::FramebufferSizeCallback(int width, int height) {
@@ -142,6 +146,8 @@ int MainWindow::InitializeGL()
         glm::vec3( 0, 0, 1 ),
         glm::vec3( 0, 0, 1 )
     };
+    // Handcrafted tangents because it is a simple case
+    // by looking at the texture mapping and vertex position
     glm::vec3 Tangents[NumVertices] = {
       glm::vec3( 1, 0, 0 ),
       glm::vec3( 1, 0, 0 ),
@@ -150,7 +156,7 @@ int MainWindow::InitializeGL()
     };
 
     // Here an example to compute the tangent
-    // with class formula
+    // with class formula (general)
     glm::vec3 t = computeTangentFace(
         {Vertices[0], Vertices[1], Vertices[2]},
         {Uvs[0], Uvs[1], Uvs[2]}
@@ -286,7 +292,7 @@ void MainWindow::RenderImgui()
 
         bool updateCamera = ImGui::SliderFloat("Left Right Slider", &m_longitude, -180.0f, 180.0f);
         updateCamera |= ImGui::SliderFloat("Up Down Slider", &m_latitude, -89.f, 89.f);
-        updateCamera |= ImGui::SliderFloat("Forward Backward Slider", &m_distance, 2.f, 14.f);
+        updateCamera |= ImGui::SliderFloat("Forward Backward Slider", &m_distance, 1.f, 14.f);
         if (updateCamera) {
             updateCameraEye();
         }
@@ -318,11 +324,11 @@ void MainWindow::RenderScene()
     m_mainShader->setBool(m_uniforms.activateNormalMap, m_activateNormalMap);
 
     // Compute light direction
-    glm::vec3 lightDir = glm::mat3(LookAt) * glm::vec3(
+    glm::vec3 lightDir = glm::normalize(glm::mat3(LookAt) * glm::vec3(
         cos(glm::radians(m_light_theta)) * cos(glm::radians(m_light_phi)),
         sin(glm::radians(m_light_theta)) * cos(glm::radians(m_light_phi)),
         sin(glm::radians(m_light_phi))
-    );
+    ));
     m_mainShader->setVec3(m_uniforms.lightDirection, lightDir);
 
     glActiveTexture(GL_TEXTURE0);
@@ -388,6 +394,7 @@ bool MainWindow::loadTexture(const std::string& path, unsigned int& textureID, G
     {
         glBindTexture(GL_TEXTURE_2D, textureID);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        
         if (minMode == GL_LINEAR_MIPMAP_LINEAR) {
             glGenerateMipmap(GL_TEXTURE_2D);
         }

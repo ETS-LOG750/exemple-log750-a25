@@ -31,30 +31,45 @@ main()
         normal = normalize(fNormal);
     }
     
-    vec3 nViewDirection = normalize(-fPosition); // As position is expressed in camera space
+    // As position is expressed in camera space
+    // meaning that the camera position is at the origin (0,0,0)
+    vec3 nViewDirection = normalize(-fPosition); 
 
     // Read AO, Roughness and Metallic texture
-    float ao = 0;
-    float n = 32;
-    float propSpec = 0.5;
+    float ao = 1.0; // No ambient occlusion by default
+    float n = 32; // Default Phong exponent
+    float propSpec = 0.3; // Default specular proportion
     if(!activateARM) {
+        // Default values
         vec3 ARM = texture(texARM, fUV).rgb;
         ao = ARM.r;
+        
         // Convert roughness to phong exponent
-        // http://simonstechblog.blogspot.com/2011/12/microfacet-brdf.html
-        n = sqrt(2.0/(ARM.g+2));
-        propSpec = ARM.b;
-       
+        float roughness = ARM.g;
+        float alpha = roughness * roughness;
+        n = mix(4.0, 256.0, 1.0 - alpha); // Phong exponent from 4 to 256
+
+        float metallic = ARM.b;
+        propSpec = 0.04 + (1.0 - 0.04) * metallic; // Make sure to have some specular
     }    
 
     // Shading
+    vec3 intensity = vec3(1.0); // White light
     float cosTheta = max(0.0, dot(normal, lightDirection));
+    vec3 finalColor;
     if(cosTheta != 0.0) {
         vec3 Rl = normalize(-lightDirection+2.0*normal*cosTheta);
         float specular = pow(max(0.0, dot(Rl, nViewDirection)), n);
-        vec4 Kd = texture(texColor, fUV);
-        fColor = ao*0.2 + Kd * cosTheta * (1-propSpec) + vec4(1.0) * specular * propSpec;
+        vec3 baseColor = texture(texColor, fUV).rgb;
+        // Applied the ambient occlusion only to the diffuse part
+        // Kd = Ks uses the base color
+        finalColor = (ao + intensity) * baseColor * cosTheta * (1-propSpec) + baseColor * specular * propSpec * intensity;
     } else {
-        fColor = vec4(vec3(0.0), 0.0);
+        finalColor = vec3(0.0);
     }
+    fColor = vec4(finalColor, 1.0);
+
+    // Gamma correction (if necessary)
+    // fColor = clamp(fColor, 0.0, 1.0);
+    // fColor = pow(fColor, vec4(1.0/2.2));
 }
