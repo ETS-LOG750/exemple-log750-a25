@@ -24,6 +24,7 @@ MainWindow::MainWindow() :
 
 void MainWindow::FramebufferSizeCallback(int width, int height) {
 	m_proj = glm::perspective(45.0f, float(width) / height, 0.01f, 100.0f);
+	glViewport(0, 0, width, height);
 }
 
 int MainWindow::Initialisation()
@@ -261,9 +262,6 @@ void MainWindow::RenderScene()
 
 	// Get projection and camera transformations
 	glm::mat4 viewMatrix = glm::lookAt(m_eye, m_at, m_up);
-
-	m_proj = glm::perspective(45.0f, float(SCR_WIDTH) / SCR_HEIGHT, 0.01f, 100.0f);
-
 	glm::mat4 modelViewMatrix = glm::scale(glm::translate(viewMatrix, glm::vec3(0, -0.5, 0)), glm::vec3(1.0));
 
 	m_mainShader->setMat4(m_mainUniforms.mvMatrix, modelViewMatrix);
