@@ -51,3 +51,6 @@ Suivre les instructions sur ENA pour la mise en place de l'environment de travai
 - `10_NormalMap`: Démontration de l'utilisation du normal mapping en OpenGL.
 - `10_Sky`: Démonstration de l'ajout d'une carte d'environnement (latitude-longitude) en OpenGL. 
 - `10_SimpleFBO`: Démontration de l'utilisation du Framebuffer Object pour effectuer un rendu multipasse.
+
+## Cours 12 (Ombrage)
+- `12_ShadowMap`" Démonstration du calcul et de l'application de la méthode Shadow mapping en OpenGL.

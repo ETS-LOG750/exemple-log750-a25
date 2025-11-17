@@ -56,3 +56,7 @@ add_subdirectory(10_NormalMap)
 add_subdirectory(10_Sky)
 # - FBO
 add_subdirectory(10_SimpleFBO)
+
+# Seance 12: Ombrage
+# - Shadow mapping
+add_subdirectory(12_ShadowMap)
