@@ -57,6 +57,10 @@ add_subdirectory(10_Sky)
 # - FBO
 add_subdirectory(10_SimpleFBO)
 
+# Seance 11: Visibilite
+# - Grass
+add_subdirectory(11_Grass)
+
 # Seance 12: Ombrage
 # - Shadow mapping
 add_subdirectory(12_ShadowMap)
