@@ -217,7 +217,7 @@ void MainWindow::RenderScene()
     glDisable(GL_STENCIL_TEST);
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     glDrawBuffer(GL_NONE);
-    glEnable(GL_CULL_FACE);
+    glEnable(GL_CULL_FACE); // Optional
     glCullFace(GL_BACK);
     RenderGeometry(*m_mainShader, true, false);
 
@@ -225,9 +225,9 @@ void MainWindow::RenderScene()
     glDepthMask(GL_FALSE);
     glEnable(GL_STENCIL_TEST);
     glStencilFunc(GL_ALWAYS, 0, 0xff);
-    glStencilOpSeparate(GL_BACK, GL_KEEP, GL_KEEP, GL_INCR_WRAP);  
-    glStencilOpSeparate(GL_FRONT, GL_KEEP, GL_KEEP, GL_DECR_WRAP); 
-    glDisable(GL_CULL_FACE);  // Must render both faces
+    glStencilOpSeparate(GL_BACK, GL_KEEP, GL_KEEP, GL_DECR_WRAP);  
+    glStencilOpSeparate(GL_FRONT, GL_KEEP, GL_KEEP, GL_INCR_WRAP); 
+    glDisable(GL_CULL_FACE);  // Optional: Must render both faces to detect edges
     m_volumeShader->bind();
     m_volumeShader->setMat4(0, lookAt);
     m_volumeShader->setMat4(5, m_proj);
@@ -235,10 +235,11 @@ void MainWindow::RenderScene()
     RenderGeometry(*m_volumeShader, false, true);
 
     // Pass 3: Final render where stencil == 0
-    glEnable(GL_CULL_FACE);
+    glEnable(GL_CULL_FACE); // Optional
     glDrawBuffer(GL_BACK);
     glStencilFunc(GL_EQUAL, 0x0, 0xFF);
-    glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+    glStencilOpSeparate(GL_BACK, GL_KEEP, GL_KEEP, GL_KEEP);
+	glStencilOpSeparate(GL_FRONT , GL_KEEP, GL_KEEP, GL_KEEP);
     glDepthMask(GL_TRUE);
     glDepthFunc(GL_LEQUAL);
     m_mainShader->bind();
