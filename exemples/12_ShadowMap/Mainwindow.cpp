@@ -204,7 +204,7 @@ int MainWindow::InitializeGL()
 	// 1) create depth texture
 	glCreateTextures(GL_TEXTURE_2D, 1, &TextureId);
 	// Peut etre aussi GL_DEPTH_COMPONENT32F vu que l'on a pas de stencil
-	glTextureStorage2D(TextureId, 1, GL_DEPTH24_STENCIL8, SHADOW_SIZE_X, SHADOW_SIZE_Y);
+	glTextureStorage2D(TextureId, 1, GL_DEPTH24_STENCIL8, m_SHADOW_SIZE, m_SHADOW_SIZE);
 	glTextureParameteri(TextureId, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTextureParameteri(TextureId, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTextureParameteri(TextureId, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -331,6 +331,23 @@ void MainWindow::RenderImgui()
 		ImGui::InputFloat("Value", &m_biasValue, 0.01f, 1.0f, "%.6f");
 		ImGui::InputFloat("Value Min", &m_biasValueMin, 0.01f, 1.0f, "%.6f");
 		ImGui::Checkbox("Front face culling", &m_frontFaceCulling);
+		// ImGUI with multiple options [256, 512, 1024, 2048]
+		const char* shadowSizes[] = { "256", "512", "1024", "2048" };
+		static int currentShadowSize = 3; // Default to 2048
+		if (ImGui::ListBox("Shadow Map Size", &currentShadowSize, shadowSizes, IM_ARRAYSIZE(shadowSizes))) {
+			m_SHADOW_SIZE = std::stoi(shadowSizes[currentShadowSize]);
+			// Recreate depth texture with new size
+			glDeleteTextures(1, &TextureId);
+			glCreateTextures(GL_TEXTURE_2D, 1, &TextureId);
+			glTextureStorage2D(TextureId, 1, GL_DEPTH24_STENCIL8, m_SHADOW_SIZE, m_SHADOW_SIZE);
+			glTextureParameteri(TextureId, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTextureParameteri(TextureId, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTextureParameteri(TextureId, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glTextureParameteri(TextureId, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+			// Reattach depth texture to FBO
+			glNamedFramebufferTexture(DepthMapFBO, GL_DEPTH_ATTACHMENT, TextureId, 0);
+		}
 
 		ImGui::End();
 	}
@@ -369,7 +386,7 @@ int MainWindow::RenderLoop()
 }
 
 int MainWindow::InitPlane2D() {
-	GLfloat VerticesPlane2D[4][3] = {
+	GLfloat VerticesPlane2D[3][3] = {
 		{-1.0, -1.0, -.5},
 		{3.0, -1.0, -.5},
 		{-1.0, 3.0, -.5},
@@ -485,11 +502,11 @@ int MainWindow::InitGeometryCube()
 int MainWindow::InitGeometryFloor()
 {
 	GLfloat VerticesFloor[NumVerticesFloor][3] = {
-		{-4, 0, -4},
-		{ 4, 0, -4},
-		{ 4, 0, 4},
-		{ -4,  0, 4}
-	};
+        {-4.0f, 0.0f,  4.0f},  // front-left
+        { 4.0f, 0.0f,  4.0f},  // front-right
+        { 4.0f, 0.0f, -4.0f},  // back-right
+        {-4.0f, 0.0f, -4.0f}   // back-left
+    };
 
 	GLfloat NormalsFloor[NumVerticesFloor][3] = {
 		{0, 1, 0},
@@ -526,7 +543,7 @@ void MainWindow::ShadowRender()
 
 	// Render the scene from the light's point of view.
 	// Create a viewport that matches the size of the shadow map FBO.
-	glViewport(0, 0, SHADOW_SIZE_X, SHADOW_SIZE_Y);
+	glViewport(0, 0, m_SHADOW_SIZE, m_SHADOW_SIZE);
 
 	// Setup the offscreen frame buffer we'll use to store the depth image.
 	glBindFramebuffer(GL_FRAMEBUFFER, DepthMapFBO);
@@ -549,6 +566,7 @@ void MainWindow::ShadowRender()
 	// Draw the floor
 	glm::mat4 ModelMatrix = glm::mat4(1.0f);
 
+	// Draw the floor
 	m_shadowMapShader->setMat4(m_shadowMapUniforms.MLP, m_lightViewProjMatrix * ModelMatrix);
 	glBindVertexArray(m_VAOs[FloorVAO]);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, NumVerticesFloor);
@@ -569,7 +587,6 @@ void MainWindow::ShadowRender()
 
 	if (m_frontFaceCulling) {
 		glDisable(GL_CULL_FACE);
-		// glCullFace(GL_BACK);
 	}
 }
 

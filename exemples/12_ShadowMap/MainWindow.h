@@ -97,8 +97,7 @@ private:
 	float m_lightFar = 10.0f;
 
 	// Shadow map information
-	const int SHADOW_SIZE_X = 2048;
-	const int SHADOW_SIZE_Y = 2048;
+	int m_SHADOW_SIZE = 2048;
 	int m_biasType = 0;
 	float m_biasValue = 0.0005f;
 	float m_biasValueMin = 0.00005f;
