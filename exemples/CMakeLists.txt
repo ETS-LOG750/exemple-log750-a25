@@ -64,3 +64,5 @@ add_subdirectory(11_Grass)
 # Seance 12: Ombrage
 # - Shadow mapping
 add_subdirectory(12_ShadowMap)
+# - Shadow volume
+add_subdirectory(12_ShadowVolume)
