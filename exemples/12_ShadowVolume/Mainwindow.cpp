@@ -30,6 +30,7 @@ MainWindow::MainWindow() :
 
 void MainWindow::FramebufferSizeCallback(int width, int height) {
 	m_proj = glm::perspective(45.0f, float(width) / height, 0.01f, 100.0f);
+	glViewport(0, 0, width, height);
 }
 
 int MainWindow::Initialisation()
